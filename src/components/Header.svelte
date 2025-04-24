@@ -93,6 +93,8 @@
 	}
 	.lang-buttons {
 		cursor: default;
+		gap: 1ch;
+		display: flex;
 	}
 	.lang-button {
 		background: transparent;
@@ -106,7 +108,7 @@
 			filter: brightness(1.2);
 		}
 		&:global(.active) {
-			outline: 3px solid white;
+			outline: 3px solid var(--color-white);
 		}
 	}
 </style>
