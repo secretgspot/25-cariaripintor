@@ -139,19 +139,6 @@
 			color: var(--txt-primary);
 		}
 
-		hr {
-			height: 2px;
-			width: 18ch;
-			border: none;
-			background: LinkText;
-			background: linear-gradient(
-					to bottom right in oklab,
-					oklch(70% 0.5 340),
-					oklch(90% 0.5 200)
-				)
-				fixed;
-		}
-
 		p {
 			max-inline-size: 40ch;
 			text-wrap: balance;

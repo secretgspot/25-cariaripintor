@@ -9,6 +9,7 @@
 	import Intro from '../components/Intro.svelte';
 	import Contact from '../components/Contact.svelte';
 	import Faq from '../components/FAQ.svelte';
+	import Estimator from '../components/Estimator.svelte';
 
 	let houseUrl = `./assets/houses/house_${generateRandomNumber(1, 7)}.jpg`;
 </script>
@@ -26,14 +27,13 @@
 	<Intro />
 
 	<Process />
-
-	<Mission />
+	<Estimator />
 
 	<Faq />
 
-	<Contact />
+	<Mission />
 
-	<!-- <Estimator/> -->
+	<Contact />
 
 	<Footer />
 </article>

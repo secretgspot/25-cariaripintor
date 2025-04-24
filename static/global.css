@@ -5,11 +5,16 @@
 	src: local('Mission Script'), url('/assets/fonts/Mission-Script.woff') format('woff');
 }
 
-@font-face {
-	font-family: 'OpenSansVariable';
-	font-style: normal;
-	font-weight: normal;
-	src: local('OpenSansVariable'), url('/assets/fonts/OpenSansVariable.ttf') format('truetype');
+@font-face{
+	font-family: "Lavanderia-Sturdy";
+	src: url("/assets/fonts/Lavanderia-Sturdy.eot");
+	src: url("/assets/fonts/Lavanderia-Sturdy.eot?#iefix")format("embedded-opentype"),
+		url("/assets/fonts/Lavanderia-Sturdy.woff")format("woff"),
+		url("/assets/fonts/Lavanderia-Sturdy.woff2")format("woff2"),
+		url("/assets/fonts/Lavanderia-Sturdy.ttf")format("truetype");
+font-weight:normal;
+font-style:normal;
+font-display:swap;
 }
 
 :root {
@@ -165,9 +170,22 @@ p, h1, h2, h3, h4, h5, h6 {
 
 /* END OF RESET */
 
+hr {
+	height: 3px;
+	width: 18ch;
+	border: none;
+	border-radius: 3px;
+	background: LinkText;
+	background: linear-gradient(
+			to bottom right in oklab,
+			oklch(70% 0.5 340),
+			oklch(90% 0.5 200)
+		)
+		fixed;
+}
 
 h1 {
-	font-family: "Mission Script";
+	font-family: "Lavanderia-Sturdy";
 	font-weight: 400;
 	font-size: clamp(1.5rem, 18vw, 3rem);
 }
