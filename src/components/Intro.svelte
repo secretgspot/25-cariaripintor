@@ -14,7 +14,13 @@
 		<strong>$16</strong> per square meter.
 	</p> -->
 
-	<p>{@html m.intro()}</p>
+	<p>
+		{m.intro()} <em class="text-highlight">{m.intro_quality()}</em>,
+		<em class="text-highlight">{m.intro_reliability()}</em>, {m.intro_and()}
+		<em class="text-highlight">{m.intro_satisfaction()}</em>
+		{m.intro_with()} <strong class="text-highlight">${import.meta.env.VITE_PRICE}</strong>
+		{m.intro_final()}
+	</p>
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		xmlns:xlink="http://www.w3.org/1999/xlink"

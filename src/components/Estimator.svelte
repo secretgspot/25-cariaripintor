@@ -1,8 +1,10 @@
 <script>
+	import { m } from '$lib/paraglide/messages.js';
+
 	const SURFACE_TYPES = {
 		smooth: 1,
 		textured: 1.2,
-		pourous: 1.5,
+		porous: 1.5,
 	};
 
 	const QUALITY_LEVELS = {
@@ -17,8 +19,8 @@
 		3: 1.5,
 	};
 
-	let exchangeRate = 540; // Example exchange rate for colones to dollars
-	let price = 16 / (1.25 * 1); // Adjusted so total comes to $16 with coats=2 and quality=economy
+	let exchangeRate = import.meta.env.VITE_EXCHANGE_RATE; // Example exchange rate for colones to dollars
+	let price = import.meta.env.VITE_PRICE / (1.25 * 1); // Adjusted so total comes to $16 with coats=2 and quality=economy
 	let surfaceArea = 1;
 	let surface = 'smooth';
 	let quality = 'economy';
@@ -61,30 +63,54 @@
 </script>
 
 <section id="section--estimator">
-	<h1 class="title">Estimator</h1>
+	<h1 class="title">
+		<!-- Estimator -->
+		{m.estimator_title()}
+	</h1>
 
 	<div class="calc-wrapper">
 		<aside class="inputs">
 			<label>
-				Surface Area:
+				<!-- Surface Area: -->
+				{m.estimator_surface_area()}
 				<input type="number" min="0" max="999" bind:value={surfaceArea} />
 			</label>
 
 			<label>
-				Surface Type:
+				<!-- Surface Type: -->
+				{m.estimator_surface_type()}
 				<select bind:value={surface}>
-					<option value="smooth">Smooth</option>
-					<option value="textured">Textured</option>
-					<option value="pourous">Pourous</option>
+					<option value="smooth">
+						<!-- Smooth -->
+						{m.estimator_surface_type_smooth()}
+					</option>
+					<option value="textured">
+						<!-- Textured -->
+						{m.estimator_surface_type_textured()}
+					</option>
+					<option value="porous">
+						<!-- Porous -->
+						{m.estimator_surface_type_porous()}
+					</option>
 				</select>
 			</label>
 
 			<label>
-				Paint Quality:
+				<!-- Paint Quality: -->
+				{m.estimator_paint_quality()}
 				<select bind:value={quality}>
-					<option value="luxury">Luxury</option>
-					<option value="premium">Premium</option>
-					<option value="economy">Economy</option>
+					<option value="luxury">
+						<!-- Luxury -->
+						{m.estimator_paint_quality_luxury()}
+					</option>
+					<option value="premium">
+						<!-- Premium -->
+						{m.estimator_paint_quality_premium()}
+					</option>
+					<option value="economy">
+						<!-- Economy -->
+						{m.estimator_paint_quality_economy()}
+					</option>
 				</select>
 			</label>
 		</aside>
@@ -139,8 +165,9 @@
 			</linearGradient>
 			<path fill="url(#gold1)" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
 		</svg>
-		This estimation assumes 2 coats of paint. Actual requirements and costs may vary depending
-		on project specifics. This is an approximate estimate, not a final quote.
+		<!-- This estimation assumes 2 coats of paint. Actual requirements and costs may vary depending
+		on project specifics. This is an approximate estimate, not a final quote. -->
+		{m.estimator_note()}
 	</small>
 </section>
 
