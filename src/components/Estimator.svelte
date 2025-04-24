@@ -121,22 +121,22 @@
 				<small>{unitsType}<sup>2</sup></small>
 			</h3>
 
-			<h3
+			<button
 				on:click={() => (weightType = weightType === 'gallons' ? 'liters' : 'gallons')}
 				class="clickable">
 				<span>{round(paint)}</span>
 				<small>{weightType}</small>
-			</h3>
+			</button>
 
 			<hr />
 
-			<h3
+			<button
 				on:click={() =>
 					(currencyType = currencyType === 'colones' ? 'dollars' : 'colones')}
 				class="clickable">
 				<span>{round(cost).toLocaleString()}</span>
 				<small>{currencyType}</small>
-			</h3>
+			</button>
 		</aside>
 	</div>
 
@@ -245,6 +245,10 @@
 		justify-content: center;
 		align-items: center;
 		margin-block: 4rem 3rem;
+		background: var(--gradient-gold) fixed;
+		color: transparent;
+		-webkit-background-clip: text;
+		background-clip: text;
 	}
 
 	.note {
@@ -265,17 +269,19 @@
 		}
 	}
 
-	h3 {
+	h3,
+	button.clickable {
 		/* font-family: 'Mission Script', cursive; */
 		font-size: 2.7rem;
 		margin: 0;
 		font-weight: lighter;
-	}
-
-	h3 small {
-		font-family: 'Open Sans', sans-serif;
-		text-transform: uppercase;
-		font-size: small;
+		border: 0;
+		background: var(--bg-primary);
+		> small {
+			font-family: 'Open Sans', sans-serif;
+			text-transform: uppercase;
+			font-size: small;
+		}
 	}
 
 	hr {
