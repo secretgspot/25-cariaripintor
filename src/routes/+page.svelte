@@ -11,7 +11,7 @@
 	import Faq from '../components/FAQ.svelte';
 	import Estimator from '../components/Estimator.svelte';
 
-	let houseUrl = `./assets/houses/house_${generateRandomNumber(1, 7)}.jpg`;
+	let houseUrl = `./assets/houses/house_${generateRandomNumber(1, 26)}.jpg`;
 </script>
 
 <article id="home" class="home">
@@ -74,6 +74,22 @@
 		border-top-left-radius: inherit;
 		border-top-right-radius: inherit;
 		filter: brightness(var(--brightness));
+		&::before {
+			content: '';
+			position: absolute;
+			z-index: 2;
+			background-image: url(/assets/painter.png);
+			background-size: contain;
+			width: 160px;
+			height: 300px;
+			bottom: 10px;
+			left: auto;
+			/* Tablets and small laptops (769px - 1024px) */
+			@media (min-width: 769px) {
+				bottom: 10px;
+				right: 10%;
+			}
+		}
 		&::after {
 			content: '';
 			position: absolute;
