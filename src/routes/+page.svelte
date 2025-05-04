@@ -84,8 +84,10 @@
 			height: 300px;
 			bottom: 10px;
 			left: auto;
-			/* Tablets and small laptops (769px - 1024px) */
-			@media (min-width: 769px) {
+		}
+		/* Tablets and small laptops (769px - 1024px) */
+		@media (min-width: 769px) {
+			&::before {
 				bottom: 10px;
 				right: 10%;
 			}
