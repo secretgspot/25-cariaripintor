@@ -11,7 +11,7 @@
 	import Faq from '../components/FAQ.svelte';
 	import Estimator from '../components/Estimator.svelte';
 
-	let houseUrl = `./assets/houses/house_${generateRandomNumber(1, 26)}.jpg`;
+	let houseUrl = `./assets/houses/house_${generateRandomNumber(1, 25)}.jpg`;
 </script>
 
 <article id="home" class="home">
