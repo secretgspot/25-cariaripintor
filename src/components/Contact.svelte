@@ -209,4 +209,43 @@
 		color: var(--txt-inverted);
 		text-decoration: none;
 	}
+
+	form {
+		position: relative;
+		overflow: hidden;
+		border-radius: var(--border-radius);
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 25%;
+			left: -50%;
+			width: 200%;
+			height: 50%;
+			background-image: var(--gradient-gold);
+			animation: animate 6s linear infinite;
+			transition: all 0.3s linear;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			background: var(--color-footer);
+			inset: 1px;
+			border-radius: calc(var(--border-radius) / 2);
+		}
+
+		> div {
+			z-index: 3;
+		}
+	}
+
+	@keyframes animate {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
 </style>
