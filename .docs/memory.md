@@ -23,6 +23,7 @@ Single page website for exterior home painting services in the Cariari area.
 - Use assets from `static/assets/`.
 - Prefer component-scoped styles; avoid using `global.css` unless absolutely necessary.
 - Follow SvelteKit and project conventions for file and folder organization.
+- **After any accepted change or improvement, always update this memory file to reflect the new state and decisions.**
 
 ## i18n
 - Use the `messages/` and `src/lib/paraglide/` structure for translations and i18n logic.
@@ -30,9 +31,11 @@ Single page website for exterior home painting services in the Cariari area.
 ## Email
 - Email functionality is handled via Nodemailer, with setup in `src/lib/emailSetup.server.js`.
 
-## For Agents
-- Always read this memory before making changes or adding features.
-- Maintain the above conventions for consistency and maintainability.
+## SEO & Performance Improvements (2025-06-29)
+- Added SEO meta tags, Open Graph, Twitter Card, and canonical link to `src/app.html`.
+- Added LocalBusiness structured data in `static/structured-data.json` and referenced in `src/app.html`.
+- Improved image alt text, width/height, and loading attributes in `src/components/Header.svelte` and hero image in `+page.svelte`.
+- Added responsive image logic for hero image in `+page.svelte`.
 
 ---
 _Last updated: 2025-06-29_
