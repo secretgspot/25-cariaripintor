@@ -1,0 +1,5 @@
+{
+  "extends": ["plugin:@sveltejs/kit/recommended"],
+  "rules": {},
+  "overrides": []
+}

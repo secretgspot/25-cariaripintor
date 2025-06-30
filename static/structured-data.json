@@ -1,0 +1,16 @@
+{
+  "name": "Cariari Painter 2025",
+  "description": "Exterior home painting services in Cariari, Heredia area.",
+  "author": "",
+  "url": "https://cariaripintor.com/",
+  "image": "https://cariaripintor.com/logo.svg",
+  "@type": "LocalBusiness",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Cariari",
+    "addressRegion": "Heredia",
+    "addressCountry": "CR"
+  },
+  "telephone": "8709-5738",
+  "openingHours": "Mo-Sa 08:00-18:00"
+}

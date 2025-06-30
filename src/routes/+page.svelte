@@ -11,7 +11,9 @@
 	import Faq from '../components/FAQ.svelte';
 	import Estimator from '../components/Estimator.svelte';
 
+	// Responsive image srcset for hero background
 	let houseUrl = `./assets/houses/house_${generateRandomNumber(1, 25)}.jpg`;
+	let houseSrcSet = Array.from({length: 25}, (_, i) => `/assets/houses/house_${i+1}.jpg 1200w`).join(', ');
 </script>
 
 <article id="home" class="home">
@@ -20,8 +22,10 @@
 	<section id="section--home-hero" style="background-image: url({houseUrl})">
 		<img
 			src="/assets/logos/cariari_painter_v6_{getLocale()}.png"
-			alt="Cariari Painter"
-			class="hero-text-1" />
+			alt="Cariari Painter logo, exterior home painting services in Cariari, Costa Rica"
+			class="hero-text-1"
+			loading="eager"
+		/>
 	</section>
 
 	<Intro />

@@ -6,7 +6,7 @@
 </script>
 
 <header>
-	<img src="./assets/logo.svg" alt="Cariari Painters logo" class="logo" />
+	<img src="./assets/logo.svg" alt="Cariari Painters logo, exterior home painting services in Cariari, Costa Rica" class="logo" width="60" height="60" loading="eager" />
 	<h1 class="title">Cariari Painter</h1>
 	<div class="lang-buttons">
 		<button
@@ -15,7 +15,7 @@
 			class:active={locale == 'es'}
 			title="Espanol"
 			id="es">
-			<img src="./assets/flag_cr.png" alt="Espanol Flag" />
+			<img src="./assets/flag_cr.png" alt="Costa Rica flag for Spanish language selection" width="27" height="27" loading="lazy" />
 		</button>
 		<button
 			onclick={() => setLocale('en')}
@@ -23,7 +23,7 @@
 			class:active={locale == 'en'}
 			title="English"
 			id="en">
-			<img src="./assets/flag_usa.png" alt="English Flag" />
+			<img src="./assets/flag_usa.png" alt="USA flag for English language selection" width="27" height="27" loading="lazy" />
 		</button>
 	</div>
 </header>
