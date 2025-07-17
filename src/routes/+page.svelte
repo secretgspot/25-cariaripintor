@@ -13,7 +13,10 @@
 
 	// Responsive image srcset for hero background
 	let houseUrl = `./assets/houses/house_${generateRandomNumber(1, 25)}.jpg`;
-	let houseSrcSet = Array.from({length: 25}, (_, i) => `/assets/houses/house_${i+1}.jpg 1200w`).join(', ');
+	let houseSrcSet = Array.from(
+		{ length: 25 },
+		(_, i) => `/assets/houses/house_${i + 1}.jpg 1200w`,
+	).join(', ');
 </script>
 
 <article id="home" class="home">
@@ -24,8 +27,7 @@
 			src="/assets/logos/cariari_painter_v6_{getLocale()}.png"
 			alt="Cariari Painter logo, exterior home painting services in Cariari, Costa Rica"
 			class="hero-text-1"
-			loading="eager"
-		/>
+			loading="eager" />
 	</section>
 
 	<Intro />
@@ -57,7 +59,7 @@
 			width: 93vw;
 			border-radius: var(--border-radius);
 			margin-block: 3em;
-			box-shadow: var(--bg-primary) 0px 20px 30px -10px;
+			/* box-shadow: var(--bg-primary) 0px 20px 30px -10px; */
 		}
 
 		/* Extra-large screens (1440px and up) */
