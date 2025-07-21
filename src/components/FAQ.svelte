@@ -48,13 +48,31 @@
 </div>
 
 <style>
+	/* Small tablets and larger mobile devices (481px - 768px) */
+	@media (min-width: 481px) {
+	}
+
+	/* Tablets and small laptops (769px - 1024px) */
+	@media (min-width: 769px) {
+	}
+
+	/* Large desktops and high-resolution screens (1025px and up) */
+	@media (min-width: 1025px) {
+	}
+
+	/* Extra-large screens (1440px and up) */
+	@media (min-width: 1440px) {
+	}
+
 	.faq {
-		margin-block: 1rem 3rem;
-		max-width: 36ch;
+		grid-column: 2 / -2;
+		margin-block: var(--size-small) var(--size-large);
+		/* max-width: 36ch; */
 
 		/* Small tablets and larger mobile devices (481px - 768px) */
 		@media (min-width: 481px) {
 			max-width: 63ch;
+			justify-self: center;
 		}
 
 		/* Tablets and small laptops (769px - 1024px) */
@@ -62,27 +80,17 @@
 			max-width: 81ch;
 		}
 
-		/* Large desktops and high-resolution screens (1025px and up) */
-		@media (min-width: 1025px) {
-			max-width: 90ch;
-		}
-
-		/* Extra-large screens (1440px and up) */
-		@media (min-width: 1440px) {
-		}
-
 		h2 {
-			font-size: 1.5rem;
-			margin-bottom: 10px;
+			margin-bottom: var(--size-small);
 		}
 
 		ul {
 			list-style-type: disc;
-			padding-left: 20px;
-			margin-block: 0.5rem 0;
+			padding-left: var(--size-small);
+			margin-block: var(--size-extra-small) 0;
 
 			li {
-				margin-bottom: 10px;
+				margin-bottom: var(--size-small);
 			}
 		}
 	}

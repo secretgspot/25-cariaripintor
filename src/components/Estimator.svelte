@@ -172,10 +172,27 @@
 </section>
 
 <style>
+	/* Small tablets and larger mobile devices (481px - 768px) */
+	@media (min-width: 481px) {
+	}
+
+	/* Tablets and small laptops (769px - 1024px) */
+	@media (min-width: 769px) {
+	}
+
+	/* Large desktops and high-resolution screens (1025px and up) */
+	@media (min-width: 1025px) {
+	}
+
+	/* Extra-large screens (1440px and up) */
+	@media (min-width: 1440px) {
+	}
+
 	#section--estimator {
+		grid-column: 2 / -2;
+
 		position: relative;
-		max-width: clamp(360px, 69dvw, 93ch);
-		margin-block: 0 3rem;
+		margin-block: 0 var(--size-large);
 		&::before {
 			content: '';
 			position: absolute;
@@ -189,7 +206,7 @@
 	}
 
 	.calc-wrapper {
-		gap: 1rem;
+		gap: var(--size-small);
 		display: flex;
 		flex-direction: column;
 
@@ -207,17 +224,17 @@
 		justify-content: flex-end;
 		> label {
 			font-size: smaller;
-			margin-bottom: 1rem;
+			margin-bottom: var(--size-medium);
 			> input,
 			> select {
 				width: 100%;
-				padding: 0.5rem;
-				margin-top: 0.2rem;
+				padding: var(--size-extra-small);
+				margin-top: var(--size-extra-small);
 				background: var(--bg-secondary);
 				color: var(--txt-primary);
 				border: 1px solid var(--bg-tertiary);
 				border-radius: var(--border-radius);
-				min-height: 45px;
+				min-height: var(--size-large);
 			}
 		}
 	}
@@ -226,15 +243,19 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		margin: 0 1rem 0 0;
+		margin: 0 var(--size-small) 0 0;
 		justify-content: flex-end;
+		/* Tablets and small laptops (769px - 1024px) */
+		@media (min-width: 769px) {
+			align-self: center;
+		}
 	}
 
 	.title {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-block: 4rem 3rem;
+		margin-block: calc(var(--size-large) * 1.5) var(--size-large);
 		background: var(--gradient-gold) fixed;
 		color: transparent;
 		-webkit-background-clip: text;
@@ -242,16 +263,22 @@
 	}
 
 	.note {
-		margin-top: 2rem;
+		margin-top: var(--size-medium);
 		color: var(--txt-tertiary);
-		padding: 1rem;
-		border: 1px dashed var(--border);
+		padding: var(--size-small);
+		border: 1px dashed var(--border-color);
 		border-radius: var(--border-radius);
-		gap: 0 1rem;
+		gap: 0 var(--size-small);
 		display: grid;
 		grid-template-columns: minmax(36px, 45px) 1fr;
 		justify-items: center;
 		align-items: center;
+
+		/* Tablets and small laptops (769px - 1024px) */
+		@media (min-width: 769px) {
+			max-width: 81ch;
+			place-self: center;
+		}
 
 		> svg {
 			width: 30px;
@@ -261,14 +288,12 @@
 
 	h3,
 	button.clickable {
-		/* font-family: 'Mission Script', cursive; */
-		font-size: 2.7rem;
+		font-size: var(--size-large);
 		margin: 0;
 		font-weight: lighter;
 		border: 0;
 		background: var(--bg-primary);
 		> small {
-			font-family: 'Open Sans', sans-serif;
 			text-transform: uppercase;
 			font-size: small;
 		}
@@ -280,12 +305,12 @@
 	}
 
 	hr {
-		margin-block: 1rem;
+		margin-block: var(--size-small);
 	}
 
 	.clickable {
 		cursor: pointer;
-		transition: 0.3s ease;
+		transition: var(--duration) ease;
 		&:hover {
 			background: var(--gradient);
 		}

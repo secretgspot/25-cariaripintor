@@ -109,46 +109,53 @@
 </section>
 
 <style>
-	.contact {
-		/* @media (prefers-color-scheme: dark) {
-			--text-1: oklch(95% none none);
-			--text-2: oklch(85% none none);
-			--text-3: oklch(70% none none);
-		} */
+	/* Small tablets and larger mobile devices (481px - 768px) */
+	@media (min-width: 481px) {
+	}
 
-		/* font-family: system-ui, sans-serif; */
+	/* Tablets and small laptops (769px - 1024px) */
+	@media (min-width: 769px) {
+	}
+
+	/* Large desktops and high-resolution screens (1025px and up) */
+	@media (min-width: 1025px) {
+	}
+
+	/* Extra-large screens (1440px and up) */
+	@media (min-width: 1440px) {
+	}
+
+	.contact {
 		display: grid;
-		place-content: center;
+		grid-column: 1 / -1;
+		margin-block: var(--size-large);
+		gap: var(--size-small);
 
 		/* Small tablets and larger mobile devices (481px - 768px) */
 		@media (min-width: 481px) {
-			grid-template-columns: 1fr 1.5fr;
-			margin: 5vmin;
+			place-content: center;
+			grid-template-columns: 1fr 2fr;
+			grid-column: 2 / -2;
 		}
 
 		/* Tablets and small laptops (769px - 1024px) */
 		@media (min-width: 769px) {
-		}
-
-		/* Large desktops and high-resolution screens (1025px and up) */
-		@media (min-width: 1025px) {
-		}
-
-		/* Extra-large screens (1440px and up) */
-		@media (min-width: 1440px) {
+			gap: var(--size-medium);
 		}
 	}
 
 	.message {
 		display: grid;
-		gap: 2ch;
-		margin-inline: 12vmin;
-		margin-block: 7.2vmin;
+		margin-block: var(--size-large);
+		place-content: center;
+		justify-items: center;
+		text-align: center;
+		gap: var(--size-small);
 
 		/* Small tablets and larger mobile devices (481px - 768px) */
 		@media (min-width: 481px) {
-			margin-inline: 5vmin;
-			margin-block: 7.5vmin;
+			text-align: left;
+			justify-items: start;
 		}
 
 		header {
@@ -174,13 +181,16 @@
 
 	.contact-form {
 		display: grid;
-		gap: 1.5ch;
-		margin-inline: 5vmin;
-		margin-block: 7.5vmin;
+		gap: var(--size-small);
+		margin-inline: var(--size-small);
+		margin-block: var(--padding-large);
 		background: var(--color-footer);
-		padding: 2rem;
+		padding: var(--size-small);
 		border-radius: var(--border-radius);
-		box-shadow: 0 0.6rem 2rem -2rem var(--bg-inverted);
+		/* Small tablets and larger mobile devices (481px - 768px) */
+		@media (min-width: 481px) {
+			margin-inline: 0;
+		}
 
 		label {
 			color: var(--txt-tertiary);

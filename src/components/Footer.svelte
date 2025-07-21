@@ -55,11 +55,28 @@
 </footer>
 
 <style>
+	/* Small tablets and larger mobile devices (481px - 768px) */
+	@media (min-width: 481px) {
+	}
+
+	/* Tablets and small laptops (769px - 1024px) */
+	@media (min-width: 769px) {
+	}
+
+	/* Large desktops and high-resolution screens (1025px and up) */
+	@media (min-width: 1025px) {
+	}
+
+	/* Extra-large screens (1440px and up) */
+	@media (min-width: 1440px) {
+	}
+
 	footer {
 		--footer-bg: var(--color-footer);
 		--footer-accent: var(--color-footer-accent);
 		position: relative;
 		display: grid;
+		grid-column: 1 / -1;
 		place-items: center;
 		width: 100%;
 		margin-block-start: 3em;

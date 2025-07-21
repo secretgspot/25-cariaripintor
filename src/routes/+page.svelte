@@ -46,25 +46,34 @@
 
 <style>
 	article {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: 1fr 42ch 1fr;
 		align-items: center;
 		justify-content: center;
 		position: relative;
 		background: var(--bg-primary);
-		max-width: 1280px;
+		width: 100%;
+
+		/* Small tablets and larger mobile devices (481px - 768px) */
+		@media (min-width: 481px) {
+			grid-template-columns: 1fr 72ch 1fr;
+		}
+
+		/* Tablets and small laptops (769px - 1024px) */
+		@media (min-width: 769px) {
+			grid-template-columns: 1fr 81ch 1fr;
+		}
 
 		/* Large desktops and high-resolution screens (1025px and up) */
 		@media (min-width: 1025px) {
-			width: 93vw;
+			grid-template-columns: 1fr 90ch 1fr;
+			max-width: 1080px;
 			border-radius: var(--border-radius);
-			margin-block: 3em;
-			/* box-shadow: var(--bg-primary) 0px 20px 30px -10px; */
+			margin-block: var(--size-large);
 		}
 
 		/* Extra-large screens (1440px and up) */
 		@media (min-width: 1440px) {
-			width: 80vw;
 		}
 	}
 
@@ -75,6 +84,7 @@
 		width: 100%;
 		height: 69vh;
 		display: grid;
+		grid-column: 1 / -1;
 		justify-items: center;
 		align-items: end;
 		border-top-left-radius: inherit;
@@ -108,6 +118,10 @@
 			background: linear-gradient(0deg, var(--bg-primary), transparent 13%);
 			border-top-left-radius: inherit;
 			border-top-right-radius: inherit;
+			/* Tablets and small laptops (769px - 1024px) */
+			@media (min-width: 769px) {
+				top: 1px;
+			}
 		}
 	}
 	img.hero-text-1 {

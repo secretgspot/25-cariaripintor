@@ -11,20 +11,36 @@
 </section>
 
 <style>
+	/* Small tablets and larger mobile devices (481px - 768px) */
+	@media (min-width: 481px) {
+	}
+
+	/* Tablets and small laptops (769px - 1024px) */
+	@media (min-width: 769px) {
+	}
+
+	/* Large desktops and high-resolution screens (1025px and up) */
+	@media (min-width: 1025px) {
+	}
+
+	/* Extra-large screens (1440px and up) */
+	@media (min-width: 1440px) {
+	}
+
 	.mission {
-		--gradient-3: oklch(0.41 0.15 258.33);
-		--gradient-4: oklch(0.59 0.13 249.56);
-		margin-block: 4rem 3rem;
-		padding: 3rem;
+		grid-column: 2 / -2;
+		margin-block: calc(var(--size-large) * 1.5) var(--size-large);
+		/* padding: 3rem; */
 		/* Small tablets and larger mobile devices (481px - 768px) */
 		@media (min-width: 481px) {
-			margin-block: 6rem 6rem;
+			margin-block: calc(var(--size-large) * 2);
 		}
 
 		p {
 			font-size: 1.5rem;
 			max-width: 36ch;
 			text-align: justify;
+			justify-self: center;
 
 			/* Small tablets and larger mobile devices (481px - 768px) */
 			@media (min-width: 481px) {
@@ -38,7 +54,7 @@
 				color: transparent;
 				-webkit-background-clip: text;
 				background-clip: text;
-				margin-inline-end: 1rem;
+				margin-inline-end: var(--size-small);
 			}
 		}
 	}

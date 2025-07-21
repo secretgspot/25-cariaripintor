@@ -6,7 +6,13 @@
 </script>
 
 <header>
-	<img src="./assets/logo.svg" alt="Cariari Painters logo, exterior home painting services in Cariari, Costa Rica" class="logo" width="60" height="60" loading="eager" />
+	<img
+		src="./assets/logo.svg"
+		alt="Cariari Painters logo, exterior home painting services in Cariari, Costa Rica"
+		class="logo"
+		width="60"
+		height="60"
+		loading="eager" />
 	<h1 class="title">Cariari Painter</h1>
 	<div class="lang-buttons">
 		<button
@@ -15,7 +21,12 @@
 			class:active={locale == 'es'}
 			title="Espanol"
 			id="es">
-			<img src="./assets/flag_cr.png" alt="Costa Rica flag for Spanish language selection" width="27" height="27" loading="lazy" />
+			<img
+				src="./assets/flag_cr.png"
+				alt="Costa Rica flag for Spanish language selection"
+				width="27"
+				height="27"
+				loading="lazy" />
 		</button>
 		<button
 			onclick={() => setLocale('en')}
@@ -23,12 +34,33 @@
 			class:active={locale == 'en'}
 			title="English"
 			id="en">
-			<img src="./assets/flag_usa.png" alt="USA flag for English language selection" width="27" height="27" loading="lazy" />
+			<img
+				src="./assets/flag_usa.png"
+				alt="USA flag for English language selection"
+				width="27"
+				height="27"
+				loading="lazy" />
 		</button>
 	</div>
 </header>
 
 <style>
+	/* Small tablets and larger mobile devices (481px - 768px) */
+	@media (min-width: 481px) {
+	}
+
+	/* Tablets and small laptops (769px - 1024px) */
+	@media (min-width: 769px) {
+	}
+
+	/* Large desktops and high-resolution screens (1025px and up) */
+	@media (min-width: 1025px) {
+	}
+
+	/* Extra-large screens (1440px and up) */
+	@media (min-width: 1440px) {
+	}
+
 	header {
 		display: flex;
 		height: 60px;
