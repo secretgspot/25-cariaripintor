@@ -55,22 +55,6 @@
 </footer>
 
 <style>
-	/* Small tablets and larger mobile devices (481px - 768px) */
-	@media (min-width: 481px) {
-	}
-
-	/* Tablets and small laptops (769px - 1024px) */
-	@media (min-width: 769px) {
-	}
-
-	/* Large desktops and high-resolution screens (1025px and up) */
-	@media (min-width: 1025px) {
-	}
-
-	/* Extra-large screens (1440px and up) */
-	@media (min-width: 1440px) {
-	}
-
 	footer {
 		--footer-bg: var(--color-footer);
 		--footer-accent: var(--color-footer-accent);
@@ -79,7 +63,7 @@
 		grid-column: 1 / -1;
 		place-items: center;
 		width: 100%;
-		margin-block-start: 3em;
+		margin-block-start: var(--size-large);
 		color: var(--txt-tertiary);
 		border-bottom-right-radius: inherit;
 		border-bottom-left-radius: inherit;
@@ -107,11 +91,11 @@
 			height: 50px;
 			fill: var(--footer-accent);
 			position: absolute;
-			bottom: 1em;
-			right: 1em;
+			bottom: 1rem;
+			right: 1rem;
 		}
 		> .copy-wrap {
-			margin-inline: 2em 0;
+			margin-inline: var(--size-medium) 0;
 		}
 	}
 </style>

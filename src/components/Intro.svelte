@@ -84,22 +84,6 @@
 </section>
 
 <style>
-	/* Small tablets and larger mobile devices (481px - 768px) */
-	@media (min-width: 481px) {
-	}
-
-	/* Tablets and small laptops (769px - 1024px) */
-	@media (min-width: 769px) {
-	}
-
-	/* Large desktops and high-resolution screens (1025px and up) */
-	@media (min-width: 1025px) {
-	}
-
-	/* Extra-large screens (1440px and up) */
-	@media (min-width: 1440px) {
-	}
-
 	.intro {
 		grid-column: 2 / -2;
 		margin-block: calc(var(--size-large) * 2);

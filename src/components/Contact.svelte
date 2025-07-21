@@ -109,22 +109,6 @@
 </section>
 
 <style>
-	/* Small tablets and larger mobile devices (481px - 768px) */
-	@media (min-width: 481px) {
-	}
-
-	/* Tablets and small laptops (769px - 1024px) */
-	@media (min-width: 769px) {
-	}
-
-	/* Large desktops and high-resolution screens (1025px and up) */
-	@media (min-width: 1025px) {
-	}
-
-	/* Extra-large screens (1440px and up) */
-	@media (min-width: 1440px) {
-	}
-
 	.contact {
 		display: grid;
 		grid-column: 1 / -1;
@@ -199,11 +183,10 @@
 		input,
 		textarea {
 			width: 100%;
-			padding: 0.5rem;
+			padding: var(--size-extra-small);
 			border: none;
 			background: var(--color-footer-accent);
 			border-radius: var(--border-radius);
-			font-size: 1rem;
 			color: var(--txt-inverted);
 		}
 	}
@@ -211,12 +194,12 @@
 	.success {
 		border: 3px solid var(--color-success);
 		border-radius: var(--border-radius);
-		padding: var(--padding-large, 7.2vmin);
+		padding: var(--size-large);
 		place-content: center;
-		margin-inline: var(--padding-large, 7.2vmin);
+		margin-inline: var(--size-large);
 		display: flex;
 		flex-direction: column;
-		gap: 2rem;
+		gap: var(--size-medium);
 		/* Small tablets and larger mobile devices (481px - 768px) */
 		@media (min-width: 481px) {
 			margin-inline: 0;
@@ -243,7 +226,7 @@
 		font-family: inherit;
 	}
 	button.send-message {
-		width: 12rem;
+		width: 9rem;
 		height: auto;
 		border: 1px solid var(--color-footer-accent);
 		border-radius: 1.625rem;
