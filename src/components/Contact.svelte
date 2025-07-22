@@ -83,7 +83,11 @@
 				<textarea id="message" name="message" rows="5"></textarea>
 			</div>
 			<div>
-				<button type="submit" class="send-message" disabled={sending}>
+				<button
+					type="submit"
+					class="send-message"
+					class:active={sending}
+					disabled={sending}>
 					<span class="circle" aria-hidden="true">
 						<span class="icon arrow"></span>
 					</span>
@@ -226,7 +230,7 @@
 		font-family: inherit;
 	}
 	button.send-message {
-		width: 9rem;
+		width: 12rem;
 		height: auto;
 		border: 1px solid var(--color-footer-accent);
 		border-radius: 1.625rem;
@@ -286,14 +290,17 @@
 			text-transform: uppercase;
 		}
 
-		&:hover .circle {
+		&:hover .circle,
+		&:active .circle,
+		&.active .circle {
 			width: 100%;
 			.icon.arrow {
 				background: var(--color-white);
 				transform: translate(1rem, 0);
 			}
 		}
-		&:hover .button-text {
+		&:hover .button-text,
+		&:active .button-text {
 			color: var(--color-white);
 		}
 	}
