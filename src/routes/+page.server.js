@@ -1,19 +1,33 @@
 import { VITE_GOOGLE_EMAIL } from '$env/static/private';
-import transporter from "$lib/emailSetup.server.js";
+import transporter from '$lib/emailSetup.server.js';
+import { json } from '@sveltejs/kit';
+
+/** @type {import('./$types').PageServerLoad} */
+export async function load({ fetch }) {
+	try {
+		const response = await fetch('https://25-cariari-community.vercel.app/api/ads');
+		if (response.ok) {
+			const ads = await response.json();
+			// console.log('Ads loaded successfully:', ads.length, 'ads');
+			return { ads };
+		} else {
+			console.error('Failed to fetch ads:', response.status, response.statusText);
+			return { ads: [] };
+		}
+	} catch (error) {
+		console.error('Error fetching ads:', error);
+		return { ads: [] };
+	}
+}
 
 export const actions = {
-	// default: async ({ request }) => {
-	// 	const formData = await request.formData();
-	// 	const data = Object.fromEntries(formData);
-	// 	// return { data };
-	// 	console.log('Form data:', data);
-	// }
-	default: async ({ request }) => {
+	// Renamed from 'default' to 'sendMessage' (or any name you prefer)
+	sendMessage: async ({ request }) => {
 		try {
 			const formData = await request.formData();
-			const email = formData.get("email");
-			const name = formData.get("name");
-			const body = formData.get("message");
+			const email = formData.get('email');
+			const name = formData.get('name');
+			const body = formData.get('message');
 
 			let html = `
 				<div style="font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333333;">
@@ -32,32 +46,120 @@ export const actions = {
 
 			const message = {
 				from: VITE_GOOGLE_EMAIL,
-				to: "secretgspot@gmail.com",
+				to: VITE_GOOGLE_EMAIL,
 				subject: `Cariari Painter message from ${name}, ${email}`,
 				text: body,
-				html: html,
+				html: html
 			};
 
 			const sendEmail = async (message) => {
 				await new Promise((resolve, reject) => {
 					transporter.sendMail(message, (error, info) => {
 						if (error) {
-							console.error("Error sending email:", error);
+							console.error('Error sending email:', error);
 							reject(error);
 						} else {
-							console.log("Email sent:", info.response);
+							console.log('Email sent:', info.response);
 							resolve(info);
 						}
 					});
 				});
-			}
+			};
 
 			await sendEmail(message);
 
 			return { success: true };
 		} catch (error) {
-			console.error("Error:", error);
+			console.error('Error:', error);
 			return { error: true, success: false };
+		}
+	},
+
+	logImpression: async ({ request, fetch }) => {
+		// console.log('=== Server action logImpression called ===');
+
+		try {
+			// Parse FormData instead of JSON
+			const formData = await request.formData();
+			const adId = formData.get('adId');
+
+			// console.log('Received adId:', adId);
+
+			if (!adId) {
+				// console.log('No adId provided');
+				return { success: false, error: 'No adId provided' };
+			}
+
+			// Now make the external API call
+			const apiUrl = `https://25-cariari-community.vercel.app/api/ads/${adId}/impression`;
+			// console.log('Making request to:', apiUrl);
+
+			const response = await fetch(apiUrl, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			// console.log('API response status:', response.status);
+
+			if (response.ok) {
+				const responseData = await response.text();
+				// console.log('API response:', responseData);
+				return { success: true, message: 'Impression logged successfully' };
+			} else {
+				const errorText = await response.text();
+				console.error('API error:', errorText);
+				// Return success to not break user experience
+				return { success: true, warning: `Analytics API error: ${response.status}` };
+			}
+		} catch (error) {
+			console.error('Error in logImpression:', error);
+			return { success: true, warning: `Analytics logging failed: ${error.message}` };
+		}
+	},
+
+	logClick: async ({ request, fetch }) => {
+		// console.log('=== Server action logClick called ===');
+
+		try {
+			// Parse FormData instead of JSON
+			const formData = await request.formData();
+			const adId = formData.get('adId');
+
+			// console.log('Received adId:', adId);
+
+			if (!adId) {
+				// console.log('No adId provided');
+				return { success: false, error: 'No adId provided' };
+			}
+
+			// Now make the external API call
+			const apiUrl = `https://25-cariari-community.vercel.app/api/ads/${adId}/click`;
+			// console.log('Making request to:', apiUrl);
+
+			const response = await fetch(apiUrl, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			// console.log('API response status:', response.status);
+
+			if (response.ok) {
+				const responseData = await response.text();
+				// console.log('API response:', responseData);
+				return { success: true, message: 'Click logged successfully' };
+			} else {
+				const errorText = await response.text();
+				console.error('API error:', errorText);
+				// Return success to not break user experience
+				return { success: true, warning: `Analytics API error: ${response.status}` };
+			}
+		} catch (error) {
+			console.error('Error in logClick:', error);
+			return { success: true, warning: `Analytics logging failed: ${error.message}` };
 		}
 	}
 };

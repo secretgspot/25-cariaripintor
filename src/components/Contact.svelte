@@ -45,6 +45,7 @@
 	{:else}
 		<form
 			method="POST"
+			action="?/sendMessage"
 			class="contact-form"
 			use:enhance={() => {
 				sending = true;

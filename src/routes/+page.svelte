@@ -10,7 +10,10 @@
 	import Contact from '../components/Contact.svelte';
 	import Faq from '../components/FAQ.svelte';
 	import Estimator from '../components/Estimator.svelte';
-	import Ad from '../components/Ad.svelte';
+	import Ads from '../components/Ads.svelte';
+
+	/** @type {import('./$types').PageData} */
+	export let data;
 
 	// Responsive image srcset for hero background
 	let houseUrl = `./assets/houses/house_${generateRandomNumber(1, 25)}.jpg`;
@@ -42,7 +45,9 @@
 
 	<Contact />
 
-	<Ad width="320" height="100">
+	<Ads ads={data.ads} />
+
+	<!-- <Ad width="320" height="100">
 		<a
 			href="//cariari.agency"
 			target="_blank"
@@ -50,7 +55,7 @@
 			title="Cariari Agency Real Estate Listings">
 			<img src="/assets/ads/cariari.agency_a.webp" alt="Cariari Agency" loading="lazy" />
 		</a>
-	</Ad>
+	</Ad> -->
 
 	<Footer />
 </article>
