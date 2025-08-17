@@ -45,7 +45,7 @@
 
 	<Contact />
 
-	<Ads ads={data.ads} />
+	<Ads ad={data.ad} />
 
 	<!-- <Ad width="320" height="100">
 		<a

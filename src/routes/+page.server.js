@@ -5,18 +5,18 @@ import { json } from '@sveltejs/kit';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ fetch }) {
 	try {
-		const response = await fetch('https://25-cariari-community.vercel.app/api/ads');
+		const response = await fetch('https://25-cariari-community.vercel.app/api/ads/ad');
 		if (response.ok) {
-			const ads = await response.json();
-			// console.log('Ads loaded successfully:', ads.length, 'ads');
-			return { ads };
+			const ad = await response.json();
+			// console.log('Ad loaded successfully:', ad);
+			return { ad };
 		} else {
-			console.error('Failed to fetch ads:', response.status, response.statusText);
-			return { ads: [] };
+			console.error('Failed to fetch ad:', response.status, response.statusText);
+			return { ad: null };
 		}
 	} catch (error) {
-		console.error('Error fetching ads:', error);
-		return { ads: [] };
+		console.error('Error fetching ad:', error);
+		return { ad: null };
 	}
 }
 

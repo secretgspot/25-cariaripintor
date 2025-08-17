@@ -11,24 +11,7 @@
 	 * @property {boolean} [active] - Whether the ad is currently active
 	 */
 
-	let { ads: adList = [] } = $props();
-
-	const selectedAd = $derived.by(() => {
-		if (!adList || adList.length === 0) return null;
-
-		const activeAds = adList.filter((ad) => ad.active !== false);
-		if (activeAds.length === 0) return null;
-
-		const totalWeight = activeAds.reduce((sum, ad) => sum + (ad.weight || 1), 0);
-		let random = Math.random() * totalWeight;
-
-		for (const ad of activeAds) {
-			random -= ad.weight || 1;
-			if (random <= 0) return ad;
-		}
-
-		return activeAds[0]; // Fallback
-	});
+	let { ad: selectedAd = null } = $props();
 
 	/**
 	 * Logs ad impression for analytics
