@@ -1,51 +1,188 @@
 <script>
-	/** @type {{width: any, height: any, children?: import('svelte').Snippet}} */
-	let { width, height, children } = $props();
+	import { onMount } from 'svelte';
+
+	/**
+	 * @typedef {Object} AdConfig
+	 * @property {string} id - Unique ad identifier
+	 * @property {string} file - Image filename
+	 * @property {string} title - Ad title/alt text
+	 * @property {string} href - Click destination URL
+	 * @property {number} width - Ad width in pixels
+	 * @property {number} height - Ad height in pixels
+	 * @property {number} [weight] - Weight for random selection (higher = more likely)
+	 * @property {boolean} [active] - Whether the ad is currently active
+	 */
+
+	/** @type {AdConfig | null} */
+	let selectedAd = $state(null);
+	let impressionLogged = $state(false);
+
+	async function logImpression(ad) {
+		if (impressionLogged || !ad.id) return;
+
+		impressionLogged = true;
+
+		try {
+			const response = await fetch(
+				`https://25-ad-agency.vercel.app/ads/${ad.id}/impression`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				},
+			);
+
+			if (!response.ok) {
+				console.error(
+					'Failed to log ad impression:',
+					response.status,
+					response.statusText,
+				);
+			}
+		} catch (error) {
+			console.error('Error logging ad impression:', error);
+		}
+	}
+
+	async function logClick(ad) {
+		if (!ad.id) return;
+
+		try {
+			const response = await fetch(`https://25-ad-agency.vercel.app/ads/${ad.id}/click`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (!response.ok) {
+				console.error('Failed to log ad click:', response.status, response.statusText);
+			}
+		} catch (error) {
+			console.error('Error logging ad click:', error);
+		}
+	}
+
+	onMount(async () => {
+		try {
+			const response = await fetch('https://25-ad-agency.vercel.app/ad');
+			if (!response.ok) {
+				if (response.status === 404) {
+					selectedAd = null;
+				} else {
+					throw new Error(`HTTP ${response.status}`);
+				}
+			} else {
+				selectedAd = await response.json();
+			}
+		} catch (error) {
+			console.error('Error loading ad:', error);
+			selectedAd = null;
+		}
+	});
+
+	$effect(() => {
+		if (selectedAd && !impressionLogged) {
+			const timeoutId = setTimeout(() => logImpression(selectedAd), 1000);
+			return () => clearTimeout(timeoutId);
+		}
+	});
 </script>
 
-<div class="advertising" style="width:{width}px; height:{height}px;">
-	{#if children}{@render children()}{:else}
-		<small>{width}x{height}<br />AD</small>
-	{/if}
-</div>
+{#if selectedAd}
+	<a
+		class="advertising"
+		style="width:{selectedAd.width}px; height:{selectedAd.height}px; aspect-ratio:{selectedAd.width}/{selectedAd.height};"
+		href={selectedAd.href}
+		target="_blank"
+		rel="noopener noreferrer"
+		title={selectedAd.title}
+		aria-label={selectedAd.title}
+		onclick={() => logClick(selectedAd)}>
+		<img
+			src={selectedAd.file}
+			alt={selectedAd.title}
+			width={selectedAd.width}
+			height={selectedAd.height}
+			loading="lazy"
+			decoding="async" />
+	</a>
+{:else}
+	<div class="advertising-placeholder" aria-label="Advertisement placeholder">
+		<small class="placeholder-text">
+			Space for Ad<br />
+			<span class="ad-text">AD</span>
+		</small>
+	</div>
+{/if}
 
 <style>
 	.advertising {
-		grid-column: 2 / -2;
+		grid-column: 1 / -1;
 		justify-self: center;
-		margin-block: var(--size-large);
-
+		margin-block-start: var(--size-large);
 		position: relative;
-		background: var(--neutral);
-		color: var(--neutral-content);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		box-shadow: var(--shadow-small);
+		display: block;
+		line-height: 0;
+		text-decoration: none;
 		border-radius: var(--border-radius);
-		/* margin: 2rem 0; */
-		text-align: center;
-		opacity: var(--brightness);
+		background: var(--bg-primary);
+		color: var(--bg-primary-content);
+
+		&:hover {
+			filter: brightness(1.05);
+		}
+
 		&::after {
 			content: 'ad';
 			position: absolute;
-			bottom: 100%;
-			right: 0;
-			font-size: 9px;
-			color: var(--secondary-content);
+			top: var(--size-extra-small);
+			right: var(--size-extra-small);
+			color: var(--bg-primary-content);
 			line-height: 1;
 			text-transform: uppercase;
-			/* margin-block: 0 var(--padding-extra-small); */
-		}
-		small {
-			font-size: 12px;
+			background: var(--bg-primary);
+			padding: calc(var(--size-extra-small) / 2) calc(var(--size-extra-small) / 2);
+			border-radius: calc(var(--border-radius) / 2);
+			pointer-events: none;
+			font-size: xx-small;
 		}
 
-		:global(a) {
-			line-height: 0;
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: inherit;
 		}
-		:global(img) {
-			border-radius: var(--border-radius);
+	}
+
+	.advertising-placeholder {
+		grid-column: 1 / -1;
+		justify-self: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		background: var(--bg-primary);
+		color: var(--bg-primary-content);
+		border-radius: var(--border-radius);
+		place-self: center;
+		width: min-content;
+		min-width: 320px;
+		height: auto;
+		min-height: 100px;
+		aspect-ratio: 320/100;
+
+		.placeholder-text {
+			font-size: small;
+			font-weight: 500;
+			user-select: none;
+
+			.ad-text {
+				font-weight: 700;
+				opacity: 0.7;
+			}
 		}
 	}
 </style>

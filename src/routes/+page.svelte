@@ -10,7 +10,7 @@
 	import Contact from '../components/Contact.svelte';
 	import Faq from '../components/FAQ.svelte';
 	import Estimator from '../components/Estimator.svelte';
-	import Ads from '../components/Ads.svelte';
+	import Ad from '../components/Ad.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -45,7 +45,7 @@
 
 	<Contact />
 
-	<Ads ad={data.ad} />
+	<Ad />
 
 	<!-- <Ad width="320" height="100">
 		<a

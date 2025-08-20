@@ -234,7 +234,8 @@
 		width: 12rem;
 		height: auto;
 		border: 1px solid var(--color-footer-accent);
-		border-radius: 1.625rem;
+		border-radius: var(--border-radius);
+		box-shadow: 0 3px 0 var(--shadow-color);
 
 		.circle {
 			transition: all var(--duration) cubic-bezier(0.65, 0, 0.076, 1);
@@ -243,8 +244,6 @@
 			margin: 0;
 			width: 3rem;
 			height: 3rem;
-			background: var(--gradient-gold);
-			border-radius: 1.625rem;
 
 			.icon {
 				transition: all var(--duration) cubic-bezier(0.65, 0, 0.076, 1);
@@ -289,6 +288,12 @@
 			line-height: 1.6;
 			text-align: center;
 			text-transform: uppercase;
+		}
+
+		&:hover,
+		&:active {
+			box-shadow: none;
+			transform: translateY(3px);
 		}
 
 		&:hover .circle,

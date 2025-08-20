@@ -4,20 +4,7 @@ import { json } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ fetch }) {
-	try {
-		const response = await fetch('https://25-cariari-community.vercel.app/api/ads/ad');
-		if (response.ok) {
-			const ad = await response.json();
-			// console.log('Ad loaded successfully:', ad);
-			return { ad };
-		} else {
-			console.error('Failed to fetch ad:', response.status, response.statusText);
-			return { ad: null };
-		}
-	} catch (error) {
-		console.error('Error fetching ad:', error);
-		return { ad: null };
-	}
+	return {};
 }
 
 export const actions = {
@@ -72,94 +59,6 @@ export const actions = {
 		} catch (error) {
 			console.error('Error:', error);
 			return { error: true, success: false };
-		}
-	},
-
-	logImpression: async ({ request, fetch }) => {
-		// console.log('=== Server action logImpression called ===');
-
-		try {
-			// Parse FormData instead of JSON
-			const formData = await request.formData();
-			const adId = formData.get('adId');
-
-			// console.log('Received adId:', adId);
-
-			if (!adId) {
-				// console.log('No adId provided');
-				return { success: false, error: 'No adId provided' };
-			}
-
-			// Now make the external API call
-			const apiUrl = `https://25-cariari-community.vercel.app/api/ads/${adId}/impression`;
-			// console.log('Making request to:', apiUrl);
-
-			const response = await fetch(apiUrl, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-
-			// console.log('API response status:', response.status);
-
-			if (response.ok) {
-				const responseData = await response.text();
-				// console.log('API response:', responseData);
-				return { success: true, message: 'Impression logged successfully' };
-			} else {
-				const errorText = await response.text();
-				console.error('API error:', errorText);
-				// Return success to not break user experience
-				return { success: true, warning: `Analytics API error: ${response.status}` };
-			}
-		} catch (error) {
-			console.error('Error in logImpression:', error);
-			return { success: true, warning: `Analytics logging failed: ${error.message}` };
-		}
-	},
-
-	logClick: async ({ request, fetch }) => {
-		// console.log('=== Server action logClick called ===');
-
-		try {
-			// Parse FormData instead of JSON
-			const formData = await request.formData();
-			const adId = formData.get('adId');
-
-			// console.log('Received adId:', adId);
-
-			if (!adId) {
-				// console.log('No adId provided');
-				return { success: false, error: 'No adId provided' };
-			}
-
-			// Now make the external API call
-			const apiUrl = `https://25-cariari-community.vercel.app/api/ads/${adId}/click`;
-			// console.log('Making request to:', apiUrl);
-
-			const response = await fetch(apiUrl, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-
-			// console.log('API response status:', response.status);
-
-			if (response.ok) {
-				const responseData = await response.text();
-				// console.log('API response:', responseData);
-				return { success: true, message: 'Click logged successfully' };
-			} else {
-				const errorText = await response.text();
-				console.error('API error:', errorText);
-				// Return success to not break user experience
-				return { success: true, warning: `Analytics API error: ${response.status}` };
-			}
-		} catch (error) {
-			console.error('Error in logClick:', error);
-			return { success: true, warning: `Analytics logging failed: ${error.message}` };
 		}
 	}
 };
