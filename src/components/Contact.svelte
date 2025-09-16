@@ -290,13 +290,17 @@
 			text-transform: uppercase;
 		}
 
-		&:hover,
+		/* &:hover {
+			background: var(--color-footer-accent);
+		} */
 		&:active {
 			box-shadow: none;
 			transform: translateY(3px);
 		}
 
-		&:hover .circle,
+		&:hover .circle {
+			transform: translate(0.1rem, 0);
+		}
 		&:active .circle,
 		&.active .circle {
 			width: 100%;
