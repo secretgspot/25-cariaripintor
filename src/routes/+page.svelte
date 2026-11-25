@@ -1,7 +1,7 @@
 <script>
-	import { getLocale } from '$lib/paraglide/runtime.js';
-	import { scale } from 'svelte/transition';
-	import { generateRandomNumber } from '$lib/utils.js';
+	import { getLocale } from '#lib/paraglide/runtime.js';
+	import { m } from '#lib/paraglide/messages.js';
+	import { generateRandomNumber } from '#lib/utils.js';
 	import Header from '../components/Header.svelte';
 	import Process from '../components/Process.svelte';
 	import Footer from '../components/Footer.svelte';
@@ -12,26 +12,45 @@
 	import Estimator from '../components/Estimator.svelte';
 	import Ad from '../components/Ad.svelte';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
-
-	// Responsive image srcset for hero background
-	let houseUrl = `./assets/houses/house_${generateRandomNumber(1, 25)}.jpg`;
-	let houseSrcSet = Array.from(
-		{ length: 25 },
-		(_, i) => `/assets/houses/house_${i + 1}.jpg 1200w`,
-	).join(', ');
+	const locale = getLocale();
+	const wordmark = `/assets/logos/cariari_painter_v6_${locale}`;
+	const houseUrl = `/assets/houses/house_${generateRandomNumber(1, 25)}.jpg`;
+	const ogImage = `https://cariaripintor.com/assets/logos/og-image${locale === 'en' ? '-en' : ''}.jpg`;
 </script>
+
+<svelte:head>
+	<title>{m.meta_title()}</title>
+	<meta name="description" content={m.meta_description()} />
+	<link rel="canonical" href="https://cariaripintor.com/" />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="Cariari Painter" />
+	<meta property="og:locale" content={locale === 'es' ? 'es_CR' : 'en_US'} />
+	<meta property="og:title" content={m.meta_title()} />
+	<meta property="og:description" content={m.meta_description()} />
+	<meta property="og:url" content="https://cariaripintor.com/" />
+	<meta property="og:image" content={ogImage} />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={m.meta_title()} />
+	<meta name="twitter:description" content={m.meta_description()} />
+	<meta name="twitter:image" content={ogImage} />
+	<link rel="preload" as="image" href={houseUrl} />
+</svelte:head>
 
 <article id="home" class="home">
 	<Header />
 
-	<section id="section--home-hero" style="background-image: url({houseUrl})">
+	<section id="section--home-hero" style={`background-image: url('${houseUrl}')`}>
 		<img
-			src="/assets/logos/cariari_painter_v6_{getLocale()}.png"
+			src={`${wordmark}.webp`}
+			srcset={`${wordmark}-800.webp 800w, ${wordmark}.webp 1424w`}
+			sizes="(min-width: 1440px) 54vw, (min-width: 481px) 73vw, 96vw"
+			width="1424"
+			height="751"
 			alt="Cariari Painter logo, exterior home painting services in Cariari, Costa Rica"
 			class="hero-text-1"
-			loading="eager" />
+			loading="eager"
+			decoding="async"
+			fetchpriority="high" />
 	</section>
 
 	<Intro />
@@ -47,23 +66,15 @@
 
 	<Ad />
 
-	<!-- <Ad width="320" height="100">
-		<a
-			href="//cariari.agency"
-			target="_blank"
-			rel="noreferrer"
-			title="Cariari Agency Real Estate Listings">
-			<img src="/assets/ads/cariari.agency_a.webp" alt="Cariari Agency" loading="lazy" />
-		</a>
-	</Ad> -->
-
 	<Footer />
 </article>
 
 <style>
 	article {
 		display: grid;
-		grid-template-columns: 1fr 42ch 1fr;
+		/* min() keeps the content column inside narrow viewports: a bare 42ch
+		   is ~374px wide and overflows phones. */
+		grid-template-columns: 1fr min(42ch, 100% - var(--size-medium)) 1fr;
 		align-items: center;
 		justify-content: center;
 		position: relative;
@@ -72,17 +83,17 @@
 
 		/* Small tablets and larger mobile devices (481px - 768px) */
 		@media (min-width: 481px) {
-			grid-template-columns: 1fr 72ch 1fr;
+			grid-template-columns: 1fr min(72ch, 100% - var(--size-medium)) 1fr;
 		}
 
 		/* Tablets and small laptops (769px - 1024px) */
 		@media (min-width: 769px) {
-			grid-template-columns: 1fr 81ch 1fr;
+			grid-template-columns: 1fr min(81ch, 100% - var(--size-medium)) 1fr;
 		}
 
 		/* Large desktops and high-resolution screens (1025px and up) */
 		@media (min-width: 1025px) {
-			grid-template-columns: 1fr 90ch 1fr;
+			grid-template-columns: 1fr min(90ch, 100% - var(--size-medium)) 1fr;
 			max-width: 1080px;
 			border-radius: var(--border-radius);
 			margin-block: var(--size-large);
@@ -106,24 +117,6 @@
 		border-top-left-radius: inherit;
 		border-top-right-radius: inherit;
 		filter: brightness(var(--brightness));
-		&::before {
-			content: '';
-			position: absolute;
-			z-index: 2;
-			background-image: url(/assets/painter.png);
-			background-size: contain;
-			width: 160px;
-			height: 300px;
-			bottom: 10px;
-			left: auto;
-		}
-		/* Tablets and small laptops (769px - 1024px) */
-		@media (min-width: 769px) {
-			&::before {
-				bottom: 10px;
-				right: 10%;
-			}
-		}
 		&::after {
 			content: '';
 			position: absolute;
@@ -141,14 +134,15 @@
 		}
 	}
 	img.hero-text-1 {
-		width: 96dvw;
+		width: min(96dvw, 100%);
 		max-width: 801px;
+		height: auto;
 		transform: translateY(73px);
 		z-index: 2;
 
 		/* Small tablets and larger mobile devices (481px - 768px) */
 		@media (min-width: 481px) {
-			width: 73dvw;
+			width: min(73dvw, 100%);
 			transform: translateY(101px);
 		}
 
@@ -163,7 +157,7 @@
 
 		/* Extra-large screens (1440px and up) */
 		@media (min-width: 1440px) {
-			width: 54dvw;
+			width: min(54dvw, 100%);
 			transform: translateY(135px);
 		}
 	}

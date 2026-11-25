@@ -1,7 +1,6 @@
 <script>
-	import { m } from '$lib/paraglide/messages.js';
+	import { m } from '#lib/paraglide/messages.js';
 	import { enhance } from '$app/forms';
-	let { data, form } = $props();
 	let sending = $state(false);
 	let success = $state(false);
 	let error = $state(false);
@@ -21,9 +20,17 @@
 			{m.contact_subtitle()}
 		</p>
 		<footer>
-			<h3>{import.meta.env.VITE_PHONE}</h3>
+			<h3>
+				<a href={`tel:${String(import.meta.env.VITE_PHONE).replace(/[^\d+]/g, '')}`}>
+					{import.meta.env.VITE_PHONE}
+				</a>
+			</h3>
 		</footer>
 	</div>
+
+	<p class="sr-only" aria-live="polite">
+		{success ? m.contact_success() : error ? m.contact_error() : ''}
+	</p>
 
 	{#if success}
 		<div class="success">
@@ -56,7 +63,7 @@
 					if (result.type === 'success') {
 						success = true;
 						error = false;
-					} else if (result.type === 'error') {
+					} else if (result.type === 'failure' || result.type === 'error') {
 						success = false;
 						error = true;
 					}
@@ -81,7 +88,7 @@
 					<!-- Message -->
 					{m.contact_message()}
 				</label>
-				<textarea id="message" name="message" rows="5"></textarea>
+				<textarea id="message" name="message" rows="5" required></textarea>
 			</div>
 			<div>
 				<button
@@ -165,14 +172,35 @@
 
 		footer {
 			color: var(--txt-secondary);
+
+			a {
+				color: inherit;
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
 		}
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
 	}
 
 	.contact-form {
 		display: grid;
 		gap: var(--size-small);
 		margin-inline: var(--size-small);
-		margin-block: var(--padding-large);
+		margin-block: var(--size-large);
 		background: var(--color-footer);
 		padding: var(--size-small);
 		border-radius: var(--border-radius);
@@ -351,6 +379,19 @@
 		}
 		to {
 			transform: rotate(360deg);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		form::before {
+			animation: none;
+		}
+
+		.circle,
+		.button-text,
+		.icon,
+		.icon.arrow {
+			transition: none;
 		}
 	}
 </style>

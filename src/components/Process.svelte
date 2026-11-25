@@ -1,61 +1,40 @@
 <script>
-	import { m } from '$lib/paraglide/messages.js';
+	import { m } from '#lib/paraglide/messages.js';
+
+	const steps = [
+		{
+			image: '/assets/process/preparation.jpg',
+			title: m.process_preparation_title(),
+			description: m.process_preparation_description()
+		},
+		{
+			image: '/assets/process/painting.jpg',
+			title: m.process_painting_title(),
+			description: m.process_painting_description()
+		},
+		{
+			image: '/assets/process/cleanup.jpg',
+			title: m.process_cleanup_title(),
+			description: m.process_cleanup_description()
+		},
+		{
+			image: '/assets/process/signoff.jpg',
+			title: m.process_signoff_title(),
+			description: m.process_signoff_description()
+		}
+	];
 </script>
 
 <section class="process">
-	<div class="card">
-		<div class="content">
-			<h2 class="title">
-				<!-- Preparation Stage -->
-				{m.process_preparation_title()}
-			</h2>
-			<p class="copy">
-				<!-- We start by inspecting your home’s exterior, repairing minor damages, and
-				thoroughly cleaning surfaces. We then apply protective coverings to areas that
-				shouldn’t be painted. -->
-				{m.process_preparation_description()}
-			</p>
+	{#each steps as step}
+		<!-- svelte-ignore a11y_no_noninteractive_tabindex (focusable so keyboard users can reveal the copy) -->
+		<div class="card" tabindex="0" style={`--card-image: url('${step.image}')`}>
+			<div class="content">
+				<h2 class="title">{step.title}</h2>
+				<p class="copy">{step.description}</p>
+			</div>
 		</div>
-	</div>
-	<div class="card">
-		<div class="content">
-			<h2 class="title">
-				<!-- Painting Stage -->
-				{m.process_painting_title()}
-			</h2>
-			<p class="copy">
-				<!-- Our team uses premium-quality paint and proven techniques to ensure an even,
-				durable, and weather-resistant finish. -->
-				{m.process_painting_description()}
-			</p>
-		</div>
-	</div>
-	<div class="card">
-		<div class="content">
-			<h2 class="title">
-				<!-- Clean-Up Stage -->
-				{m.process_cleanup_title()}
-			</h2>
-			<p class="copy">
-				<!-- We take care of all debris, remove protective coverings, and leave your property
-				spotless—so you can enjoy your freshly painted home immediately. -->
-				{m.process_cleanup_description()}
-			</p>
-		</div>
-	</div>
-	<div class="card">
-		<div class="content">
-			<h2 class="title">
-				<!-- Sign-Off Stage -->
-				{m.process_signoff_title()}
-			</h2>
-			<p class="copy">
-				<!-- Before we consider the job complete, we walk through with you to ensure your full
-				satisfaction. Your approval is our priority! -->
-				{m.process_signoff_description()}
-			</p>
-		</div>
-	</div>
+	{/each}
 </section>
 
 <style>
@@ -87,7 +66,6 @@
 		align-items: flex-end;
 		overflow: hidden;
 		padding: var(--size-small);
-		/* text-align: center; */
 		color: var(--txt-inverted);
 		border-radius: var(--border-radius);
 		box-shadow: 0 1.5rem 2rem -2rem var(--bg-inverted);
@@ -108,6 +86,7 @@
 		left: 0;
 		width: 100%;
 		height: 110%;
+		background-image: var(--card-image);
 		background-size: cover;
 		background-position: 0 0;
 		transition: transform calc(var(--duration) * 1.5) var(--e);
@@ -144,24 +123,11 @@
 		transform: translateY(-50%);
 		transition: transform calc(var(--duration) * 2) var(--e);
 	}
-	.card:nth-child(1):before {
-		background-image: url('/assets/process/preparation.jpg');
-	}
-	.card:nth-child(2):before {
-		background-image: url('/assets/process/painting.jpg');
-	}
-	.card:nth-child(3):before {
-		background-image: url('/assets/process/cleanup.jpg');
-	}
-	.card:nth-child(4):before {
-		background-image: url('/assets/process/signoff.jpg');
-	}
 
 	.content {
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		/* align-items: center; */
 		width: 100%;
 		padding: var(--size-small);
 		transition: transform var(--duration) var(--e);
@@ -178,8 +144,6 @@
 	}
 
 	.copy {
-		/* font-family: var(--font-serif); */
-		/* font-size: 1.125rem; */
 		font-style: italic;
 		line-height: 1.35;
 	}
@@ -228,6 +192,15 @@
 		.card:focus-within .content,
 		.card:focus-within .content > *:not(.title) {
 			transition-duration: 0s;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.card:before,
+		.card:after,
+		.content,
+		.content > *:not(.title) {
+			transition: none;
 		}
 	}
 </style>

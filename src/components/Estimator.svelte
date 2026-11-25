@@ -1,79 +1,80 @@
 <script>
-	import { m } from '$lib/paraglide/messages.js';
+	import { getLocale } from '#lib/paraglide/runtime.js';
+	import { m } from '#lib/paraglide/messages.js';
 
 	const SURFACE_TYPES = {
 		smooth: 1,
 		textured: 1.2,
-		porous: 1.5,
+		porous: 1.5
 	};
 
 	const QUALITY_LEVELS = {
 		economy: 1,
 		premium: 1.5,
-		luxury: 1.8,
+		luxury: 1.8
 	};
 
-	const COAT_MULTIPLIERS = {
-		1: 1,
-		2: 1.25,
-		3: 1.5,
+	const COATS = 2;
+	const COVERAGE_M2_PER_GALLON = 33;
+	const LITERS_PER_GALLON = 3.785411784;
+	// VITE_PRICE is the 2-coat price per m², so the estimate below matches it exactly.
+	const PRICE_PER_M2_USD = Number(import.meta.env.VITE_PRICE) || 16;
+	const EXCHANGE_RATE = Number(import.meta.env.VITE_EXCHANGE_RATE) || 506;
+
+	// Spanish visitors start with litres and colones, English visitors with gallons and dollars.
+	// Both outputs stay clickable so either can be switched at any time.
+	const locale = getLocale();
+	const metric = locale !== 'en';
+
+	let surfaceArea = $state(1);
+	let surface = $state('smooth');
+	let quality = $state('economy');
+	let weight = $state(metric ? 'liters' : 'gallons');
+	let currency = $state(metric ? 'colones' : 'dollars');
+
+	const toggleWeight = () => {
+		weight = weight === 'liters' ? 'gallons' : 'liters';
+	};
+	const toggleCurrency = () => {
+		currency = currency === 'colones' ? 'dollars' : 'colones';
 	};
 
-	let exchangeRate = import.meta.env.VITE_EXCHANGE_RATE; // Example exchange rate for colones to dollars
-	let price = import.meta.env.VITE_PRICE / (1.25 * 1); // Adjusted so total comes to $16 with coats=2 and quality=economy
-	let surfaceArea = 1;
-	let surface = 'smooth';
-	let quality = 'economy';
-	let coats = 2;
-	let weightType = 'gallons';
-	let unitsType = 'meters';
-	let currencyType = 'colones';
-
-	const round = (val) => Math.ceil(val * 10) / 10;
-	const fixed = (val) => val.toFixed(0);
-
-	const toLiters = (gallons) => gallons * 3.785411784;
-	const toDollars = (colones) => colones / exchangeRate;
-
-	$: paint = calcPaint(surfaceArea, coats, SURFACE_TYPES[surface], weightType, unitsType);
-	$: cost = calcCost(
-		surfaceArea,
-		QUALITY_LEVELS[quality],
-		COAT_MULTIPLIERS[coats],
-		SURFACE_TYPES[surface],
-		currencyType,
-		unitsType,
+	const area = $derived(Math.max(0, Number(surfaceArea) || 0));
+	const gallons = $derived(
+		((area * SURFACE_TYPES[surface]) / COVERAGE_M2_PER_GALLON) * COATS
 	);
+	const paint = $derived(weight === 'liters' ? gallons * LITERS_PER_GALLON : gallons);
+	const costUsd = $derived(area * QUALITY_LEVELS[quality] * SURFACE_TYPES[surface] * PRICE_PER_M2_USD);
+	const cost = $derived(currency === 'colones' ? costUsd * EXCHANGE_RATE : costUsd);
 
-	function calcPaint(area, coats, surfaceMult, weight, units) {
-		const coverage = units === 'meters' ? 33 : 360;
-		const totalArea = area * surfaceMult;
-		const gallons = (totalArea / coverage) * coats;
-		return weight === 'liters' ? toLiters(gallons) : gallons;
-	}
+	const numberFormat = new Intl.NumberFormat(metric ? 'es-CR' : 'en-US', {
+		maximumFractionDigits: 1
+	});
+	// Matches the original rounding: one decimal, always rounded up.
+	const round = (value) => Math.ceil(value * 10) / 10;
 
-	function calcCost(area, qualityMult, coatMult, surfaceMult, currency, units) {
-		const basePrice = price;
-		const exchange = exchangeRate;
-		const pricePerUnit =
-			units === 'meters' ? basePrice * exchange : (basePrice * exchange) / 3.281;
-		const colones = area * qualityMult * coatMult * surfaceMult * pricePerUnit;
-		return currency === 'dollars' ? toDollars(colones) : colones;
-	}
+	const paintUnit = $derived(weight === 'liters' ? m.estimator_liters() : m.estimator_gallons());
+	const costUnit = $derived(currency === 'colones' ? m.estimator_colons() : m.estimator_dollars());
 </script>
 
 <section id="section--estimator">
-	<h1 class="title">
+	<h2 class="title">
 		<!-- Estimator -->
 		{m.estimator_title()}
-	</h1>
+	</h2>
 
 	<div class="calc-wrapper">
 		<aside class="inputs">
 			<label>
 				<!-- Surface Area: -->
 				{m.estimator_surface_area()}
-				<input type="number" min="0" max="999" bind:value={surfaceArea} />
+				<input
+					type="number"
+					inputmode="decimal"
+					min="0"
+					max="100000"
+					step="any"
+					bind:value={surfaceArea} />
 			</label>
 
 			<label>
@@ -115,33 +116,33 @@
 			</label>
 		</aside>
 
-		<aside class="outputs">
+		<aside class="outputs" aria-live="polite">
 			<h3>
-				<span>{surfaceArea}</span>
-				<small>{unitsType}<sup>2</sup></small>
+				<span>{surfaceArea ?? ''}</span>
+				<small>{m.estimator_unit_m2()}</small>
 			</h3>
 
-			<button
-				on:click={() => (weightType = weightType === 'gallons' ? 'liters' : 'gallons')}
-				class="clickable">
-				<span>{round(paint)}</span>
-				<small>{weightType}</small>
+			<button type="button" onclick={toggleWeight} class="clickable">
+				<span>{numberFormat.format(round(paint))}</span>
+				<small>{paintUnit}</small>
 			</button>
 
 			<hr />
 
-			<button
-				on:click={() =>
-					(currencyType = currencyType === 'colones' ? 'dollars' : 'colones')}
-				class="clickable total">
-				<span>{round(cost).toLocaleString()}</span>
-				<small>{currencyType}</small>
+			<button type="button" onclick={toggleCurrency} class="clickable total">
+				<span>{numberFormat.format(round(cost))}</span>
+				<small>{costUnit}</small>
 			</button>
 		</aside>
 	</div>
 
 	<small class="note">
-		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			aria-hidden="true">
 			<linearGradient
 				id="gold1"
 				x1="93"

@@ -42,7 +42,7 @@
 	"estimator_meters": "metros",
 	"estimator_liters": "litros",
 	"estimator_colons": "colones",
-	"estimator_dollars": "dollars",
+	"estimator_dollars": "dólares",
 	"estimator_gallons": "galones",
 	"estimator_surface_area": "Área de superficie",
 	"estimator_surface_type": "Tipo de superficie",
@@ -52,5 +52,9 @@
 	"estimator_paint_quality": "Calidad de pintura",
 	"estimator_paint_quality_economy": "Económica",
 	"estimator_paint_quality_premium": "Premium",
-	"estimator_paint_quality_luxury": "Lujo"
+	"estimator_paint_quality_luxury": "Lujo",
+	"estimator_unit_m2": "m²",
+	"estimator_unit_ft2": "ft²",
+	"meta_title": "Cariari Painter — Pintura exterior de casas en Cariari, Costa Rica",
+	"meta_description": "Servicios profesionales de pintura exterior en Cariari, Heredia. Acabados de calidad, servicio confiable y garantía de satisfacción. Solicite su cotización gratis."
 }

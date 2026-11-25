@@ -1,5 +1,14 @@
 <script>
-	import { m } from '$lib/paraglide/messages.js';
+	import { getLocale } from '#lib/paraglide/runtime.js';
+	import { m } from '#lib/paraglide/messages.js';
+
+	const locale = getLocale();
+	const priceUsd = Number(import.meta.env.VITE_PRICE) || 16;
+	const exchangeRate = Number(import.meta.env.VITE_EXCHANGE_RATE) || 506;
+	const price =
+		locale === 'es'
+			? `₡${new Intl.NumberFormat('es-CR').format(Math.round(priceUsd * exchangeRate))}`
+			: `$${priceUsd}`;
 </script>
 
 <section class="intro">
@@ -18,7 +27,7 @@
 		{m.intro()} <em class="text-highlight">{m.intro_quality()}</em>,
 		<em class="text-highlight">{m.intro_reliability()}</em>, {m.intro_and()}
 		<em class="text-highlight">{m.intro_satisfaction()}</em>
-		{m.intro_with()} <strong class="text-highlight">${import.meta.env.VITE_PRICE}</strong>
+		{m.intro_with()} <strong class="text-highlight">{price}</strong>
 		{m.intro_final()}
 	</p>
 	<svg

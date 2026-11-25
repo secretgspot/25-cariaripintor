@@ -1,8 +1,7 @@
 <script>
-	import { getLocale } from '$lib/paraglide/runtime.js';
-	import { setLocale } from '$lib/paraglide/runtime';
+	import { getLocale, setLocale } from '#lib/paraglide/runtime.js';
 
-	let locale = getLocale();
+	let locale = $state(getLocale());
 </script>
 
 <header>
@@ -16,27 +15,33 @@
 	<h1 class="title">Cariari Painter</h1>
 	<div class="lang-buttons">
 		<button
+			type="button"
 			onclick={() => setLocale('es')}
 			class="lang-button"
-			class:active={locale == 'es'}
-			title="Espanol"
+			class:active={locale === 'es'}
+			aria-pressed={locale === 'es'}
+			title="Español"
+			aria-label="Cambiar a español"
 			id="es">
 			<img
 				src="./assets/flag_cr.png"
-				alt="Costa Rica flag for Spanish language selection"
+				alt=""
 				width="27"
 				height="27"
 				loading="lazy" />
 		</button>
 		<button
+			type="button"
 			onclick={() => setLocale('en')}
 			class="lang-button"
-			class:active={locale == 'en'}
+			class:active={locale === 'en'}
+			aria-pressed={locale === 'en'}
 			title="English"
+			aria-label="Switch to English"
 			id="en">
 			<img
 				src="./assets/flag_usa.png"
-				alt="USA flag for English language selection"
+				alt=""
 				width="27"
 				height="27"
 				loading="lazy" />
@@ -77,36 +82,24 @@
 	}
 	.logo {
 		height: 100%;
+		width: auto;
 		transition: transform 0.3s ease;
-		/* cursor: pointer; */
 	}
 
+	/* Keeps the page heading available to assistive technology without
+	   competing with the hero wordmark visually. */
 	.title {
-		transition: transform 0.3s ease;
-		position: relative;
-		background:
-			radial-gradient(
-				ellipse farthest-corner at right bottom,
-				#fedb37 0%,
-				#fdb931 8%,
-				#9f7928 30%,
-				#8a6e2f 40%,
-				transparent 80%
-			),
-			radial-gradient(
-					ellipse farthest-corner at left top,
-					#ffffff 0%,
-					#ffffac 8%,
-					#d1b464 25%,
-					#5d4a1f 62.5%,
-					#5d4a1f 100%
-				)
-				fixed;
-		color: transparent;
-		-webkit-background-clip: text;
-		background-clip: text;
-		display: none;
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
 	}
+
 	.lang-buttons {
 		cursor: default;
 		gap: 1ch;
@@ -115,16 +108,24 @@
 	.lang-button {
 		background: transparent;
 		border-radius: 50%;
-		width: 27px;
-		height: 27px;
+		width: 40px;
+		height: 40px;
 		padding: 0;
 		border: none;
 		cursor: pointer;
+		display: grid;
+		place-items: center;
 		&:hover {
 			filter: brightness(1.2);
 		}
 		&:global(.active) {
 			outline: 3px solid var(--color-white);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.logo {
+			transition: none;
 		}
 	}
 </style>

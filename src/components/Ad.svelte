@@ -128,7 +128,7 @@
 		text-decoration: none;
 		border-radius: var(--border-radius);
 		background: var(--bg-primary);
-		color: var(--bg-primary-content);
+		color: var(--txt-secondary);
 
 		&:hover {
 			filter: brightness(1.05);
@@ -139,7 +139,7 @@
 			position: absolute;
 			top: var(--size-extra-small);
 			right: var(--size-extra-small);
-			color: var(--bg-primary-content);
+			color: var(--txt-secondary);
 			line-height: 1;
 			text-transform: uppercase;
 			background: var(--bg-primary);
@@ -165,7 +165,7 @@
 		align-items: center;
 		text-align: center;
 		background: var(--bg-primary);
-		color: var(--bg-primary-content);
+		color: var(--txt-secondary);
 		border-radius: var(--border-radius);
 		place-self: center;
 		width: min-content;
