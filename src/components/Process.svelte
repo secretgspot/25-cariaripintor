@@ -3,204 +3,168 @@
 
 	const steps = [
 		{
-			image: '/assets/process/preparation.jpg',
+			image: '/assets/process/preparation',
 			title: m.process_preparation_title(),
-			description: m.process_preparation_description()
+			description: m.process_preparation_description(),
 		},
 		{
-			image: '/assets/process/painting.jpg',
+			image: '/assets/process/painting',
 			title: m.process_painting_title(),
-			description: m.process_painting_description()
+			description: m.process_painting_description(),
 		},
 		{
-			image: '/assets/process/cleanup.jpg',
+			image: '/assets/process/cleanup',
 			title: m.process_cleanup_title(),
-			description: m.process_cleanup_description()
+			description: m.process_cleanup_description(),
 		},
 		{
-			image: '/assets/process/signoff.jpg',
+			image: '/assets/process/signoff',
 			title: m.process_signoff_title(),
-			description: m.process_signoff_description()
-		}
+			description: m.process_signoff_description(),
+		},
 	];
+
+	const sizes = '(min-width: 769px) 25vw, (min-width: 481px) 50vw, 100vw';
 </script>
 
-<section class="process">
-	{#each steps as step}
-		<!-- svelte-ignore a11y_no_noninteractive_tabindex (focusable so keyboard users can reveal the copy) -->
-		<div class="card" tabindex="0" style={`--card-image: url('${step.image}')`}>
-			<div class="content">
-				<h2 class="title">{step.title}</h2>
-				<p class="copy">{step.description}</p>
-			</div>
-		</div>
-	{/each}
+<section class="process" aria-labelledby="process-title">
+	<!-- <h2 class="title" id="process-title">{m.process_title()}</h2> -->
+
+	<div class="grid">
+		{#each steps as step}
+			<article class="card">
+				<img
+					class="media"
+					src={`${step.image}.jpg`}
+					srcset={`${step.image}-512.webp 512w, ${step.image}-800.webp 800w`}
+					{sizes}
+					width="512"
+					height="512"
+					loading="lazy"
+					decoding="async"
+					alt=""
+				/>
+				<div class="content">
+					<h3>{step.title}</h3>
+					<p>{step.description}</p>
+				</div>
+			</article>
+		{/each}
+	</div>
 </section>
 
 <style>
-	:root {
-		--e: cubic-bezier(0.19, 1, 0.22, 1);
-	}
-
 	.process {
+		--e: cubic-bezier(0.19, 1, 0.22, 1);
 		grid-column: 1 / -1;
-		display: grid;
-		grid-gap: var(--size-small);
-		padding: var(--size-medium) var(--size-small);
+		container-type: inline-size;
+		padding: var(--size-medium) var(--size-small) 0;
 		background: var(--bg-tertiary);
 	}
-	@media (min-width: 481px) {
-		.process {
+
+	.title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-block: 0 var(--size-medium);
+		background: var(--gradient-gold) fixed;
+		color: transparent;
+		-webkit-background-clip: text;
+		background-clip: text;
+	}
+
+	.grid {
+		display: grid;
+		gap: var(--size-small);
+		padding-bottom: var(--size-medium);
+	}
+
+	@container (min-width: 30rem) {
+		.grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
-	@media (min-width: 769px) {
-		.process {
+	@container (min-width: 48rem) {
+		.grid {
 			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 
 	.card {
 		position: relative;
-		display: flex;
-		align-items: flex-end;
+		display: grid;
+		align-items: end;
+		aspect-ratio: 4 / 5;
 		overflow: hidden;
 		padding: var(--size-small);
 		color: var(--txt-inverted);
 		border-radius: var(--border-radius);
 		box-shadow: 0 1.5rem 2rem -2rem var(--bg-inverted);
 		filter: brightness(var(--brightness));
-		> * {
-			cursor: default;
+
+		.media {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
 		}
-	}
-	@media (min-width: 481px) {
-		.card {
-			min-height: 350px;
-		}
-	}
-	.card:before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 110%;
-		background-image: var(--card-image);
-		background-size: cover;
-		background-position: 0 0;
-		transition: transform calc(var(--duration) * 1.5) var(--e);
-		pointer-events: none;
-	}
-	.card:after {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 200%;
-		pointer-events: none;
-		background-image: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 0%,
-			rgba(0, 0, 0, 0.009) 11.7%,
-			rgba(0, 0, 0, 0.034) 22.1%,
-			rgba(0, 0, 0, 0.072) 31.2%,
-			rgba(0, 0, 0, 0.123) 39.4%,
-			rgba(0, 0, 0, 0.182) 46.6%,
-			rgba(0, 0, 0, 0.249) 53.1%,
-			rgba(0, 0, 0, 0.32) 58.9%,
-			rgba(0, 0, 0, 0.394) 64.3%,
-			rgba(0, 0, 0, 0.468) 69.3%,
-			rgba(0, 0, 0, 0.54) 74.1%,
-			rgba(0, 0, 0, 0.607) 78.8%,
-			rgba(0, 0, 0, 0.668) 83.6%,
-			rgba(0, 0, 0, 0.721) 88.7%,
-			rgba(0, 0, 0, 0.762) 94.1%,
-			rgba(0, 0, 0, 0.79) 100%
-		);
-		transform: translateY(-50%);
-		transition: transform calc(var(--duration) * 2) var(--e);
-	}
 
-	.content {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		padding: var(--size-small);
-		transition: transform var(--duration) var(--e);
-		z-index: 1;
-	}
-	.content > * + * {
-		margin-top: var(--size-small);
-	}
-
-	.title {
-		font-size: 1.3rem;
-		font-weight: bold;
-		line-height: 1.2;
-	}
-
-	.copy {
-		font-style: italic;
-		line-height: 1.35;
-	}
-
-	@media (hover: hover) and (min-width: 481px) {
-		.card:after {
-			transform: translateY(0);
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: linear-gradient(
+				to bottom,
+				rgb(0 0 0 / 0) 20%,
+				rgb(0 0 0 / 0.45) 62%,
+				rgb(0 0 0 / 0.82) 100%
+			);
+			pointer-events: none;
 		}
 
 		.content {
-			transform: translateY(calc(100% - 4.5rem));
-		}
-		.content > *:not(.title) {
-			opacity: 0;
-			transform: translateY(1rem);
-			transition:
-				transform var(--duration) var(--e),
-				opacity var(--duration) var(--e);
-		}
+			position: relative;
+			z-index: 1;
+			display: grid;
+			gap: var(--size-extra-small);
 
-		.card:hover,
-		.card:focus-within {
-			align-items: center;
-		}
-		.card:hover:before,
-		.card:focus-within:before {
-			transform: translateY(-4%);
-		}
-		.card:hover:after,
-		.card:focus-within:after {
-			transform: translateY(-50%);
-		}
-		.card:hover .content,
-		.card:focus-within .content {
-			transform: translateY(0);
-		}
-		.card:hover .content > *:not(.title),
-		.card:focus-within .content > *:not(.title) {
-			opacity: 1;
-			transform: translateY(0);
-			transition-delay: calc(var(--duration) / 8);
-		}
+			h3 {
+				font-size: 1.3rem;
+				font-weight: bold;
+				line-height: 1.2;
+			}
 
-		.card:focus-within:before,
-		.card:focus-within:after,
-		.card:focus-within .content,
-		.card:focus-within .content > *:not(.title) {
-			transition-duration: 0s;
+			p {
+				font-style: italic;
+				line-height: 1.35;
+			}
 		}
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.card:before,
-		.card:after,
-		.content,
-		.content > *:not(.title) {
-			transition: none;
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			.card {
+				animation: reveal linear both;
+				animation-timeline: view();
+				animation-range: entry 10% cover 30%;
+			}
+			.card:nth-child(2) {
+				animation-range: entry 15% cover 35%;
+			}
+			.card:nth-child(3) {
+				animation-range: entry 20% cover 40%;
+			}
+			.card:nth-child(4) {
+				animation-range: entry 25% cover 45%;
+			}
+		}
+	}
+
+	@keyframes reveal {
+		from {
+			opacity: 0;
+			translate: 0 2rem;
 		}
 	}
 </style>
