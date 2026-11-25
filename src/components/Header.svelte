@@ -10,7 +10,7 @@
 		alt="Cariari Painters logo, exterior home painting services in Cariari, Costa Rica"
 		class="logo"
 		width="60"
-		height="60"
+		height="80"
 		loading="eager" />
 	<h1 class="title">Cariari Painter</h1>
 	<div class="lang-buttons">
@@ -81,8 +81,8 @@
 		}
 	}
 	.logo {
-		height: 100%;
-		width: auto;
+		width: 60px;
+		height: auto;
 		transition: transform 0.3s ease;
 	}
 

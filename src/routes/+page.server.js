@@ -1,6 +1,11 @@
 import { fail } from '@sveltejs/kit';
 import { VITE_GOOGLE_EMAIL } from '$app/env/private';
 import transporter from '#lib/emailSetup.server.js';
+import { generateRandomNumber } from '#lib/utils.js';
+
+// Chosen per page load on the server so the preload, the SSR markup and the
+// hydrated client all reference the same house (no second download).
+export const load = () => ({ house: generateRandomNumber(1, 25) });
 
 const MAX_NAME = 100;
 const MAX_EMAIL = 254;

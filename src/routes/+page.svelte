@@ -1,7 +1,6 @@
 <script>
 	import { getLocale } from '#lib/paraglide/runtime.js';
 	import { m } from '#lib/paraglide/messages.js';
-	import { generateRandomNumber } from '#lib/utils.js';
 	import Header from '../components/Header.svelte';
 	import Process from '../components/Process.svelte';
 	import Footer from '../components/Footer.svelte';
@@ -12,9 +11,11 @@
 	import Estimator from '../components/Estimator.svelte';
 	import Ad from '../components/Ad.svelte';
 
+	let { data } = $props();
+
 	const locale = getLocale();
 	const wordmark = `/assets/logos/cariari_painter_v6_${locale}`;
-	const houseUrl = `/assets/houses/house_${generateRandomNumber(1, 25)}.jpg`;
+	const houseUrl = `/assets/houses/house_${data.house}.jpg`;
 	const ogImage = `https://cariaripintor.com/assets/logos/og-image${locale === 'en' ? '-en' : ''}.jpg`;
 </script>
 
@@ -80,6 +81,9 @@
 		position: relative;
 		background: var(--bg-primary);
 		width: 100%;
+		/* body is a grid: without this the article grows to its min-content
+		   width (~320px) and overflows when a classic scrollbar is present. */
+		min-width: 0;
 
 		/* Small tablets and larger mobile devices (481px - 768px) */
 		@media (min-width: 481px) {
