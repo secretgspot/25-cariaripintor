@@ -25,6 +25,7 @@
 			max-width: 36ch;
 			text-align: justify;
 			justify-self: center;
+			text-justify: inter-character;
 
 			/* Small tablets and larger mobile devices (481px - 768px) */
 			@media (min-width: 481px) {
