@@ -11,7 +11,8 @@
 		class="logo"
 		width="60"
 		height="80"
-		loading="eager" />
+		loading="eager"
+	/>
 	<h1 class="title">Cariari Painter</h1>
 	<div class="lang-buttons">
 		<button
@@ -22,13 +23,9 @@
 			aria-pressed={locale === 'es'}
 			title="Español"
 			aria-label="Cambiar a español"
-			id="es">
-			<img
-				src="./assets/flag_cr.png"
-				alt=""
-				width="27"
-				height="27"
-				loading="lazy" />
+			id="es"
+		>
+			<img src="./assets/flag_cr.png" alt="" width="27" height="27" loading="lazy" />
 		</button>
 		<button
 			type="button"
@@ -38,13 +35,9 @@
 			aria-pressed={locale === 'en'}
 			title="English"
 			aria-label="Switch to English"
-			id="en">
-			<img
-				src="./assets/flag_usa.png"
-				alt=""
-				width="27"
-				height="27"
-				loading="lazy" />
+			id="en"
+		>
+			<img src="./assets/flag_usa.png" alt="" width="27" height="27" loading="lazy" />
 		</button>
 	</div>
 </header>
@@ -53,7 +46,7 @@
 	header {
 		display: flex;
 		height: 60px;
-		top: 30px;
+		top: 42vh;
 		left: 50%;
 		z-index: 3;
 		position: absolute;
@@ -65,6 +58,7 @@
 
 		/* Tablets and small laptops (769px - 1024px) */
 		@media (min-width: 769px) {
+			top: 30px;
 			left: 30px;
 			transform: translateX(0%);
 			justify-content: flex-start;
