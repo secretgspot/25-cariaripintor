@@ -351,21 +351,20 @@
 		&::before {
 			content: '';
 			position: absolute;
-			top: 25%;
+			top: -50%;
 			left: -50%;
 			width: 200%;
-			height: 50%;
+			height: 200%;
 			background-image: var(--gradient-gold);
 			animation: animate 6s linear infinite;
-			transition: all var(--duration) linear;
 		}
 
 		&::after {
 			content: '';
 			position: absolute;
 			background: var(--color-footer);
-			inset: 1px;
-			border-radius: calc(var(--border-radius) / 2);
+			inset: 3px;
+			border-radius: calc(var(--border-radius) - 3px);
 		}
 
 		> div {
@@ -383,10 +382,6 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		form::before {
-			animation: none;
-		}
-
 		.circle,
 		.button-text,
 		.icon,

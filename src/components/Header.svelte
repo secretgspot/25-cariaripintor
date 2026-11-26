@@ -57,27 +57,17 @@
 		left: 50%;
 		z-index: 3;
 		position: absolute;
-		gap: 10px;
-		flex-direction: column;
+		gap: var(--size-small);
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
 		transform: translateX(-50%);
-		/* Small tablets and larger mobile devices (481px - 768px) */
-		@media (min-width: 481px) {
-		}
 
 		/* Tablets and small laptops (769px - 1024px) */
 		@media (min-width: 769px) {
 			left: 30px;
 			transform: translateX(0%);
-			flex-direction: row;
-			align-items: center;
-		}
-
-		/* Large desktops and high-resolution screens (1025px and up) */
-		@media (min-width: 1025px) {
-		}
-
-		/* Extra-large screens (1440px and up) */
-		@media (min-width: 1440px) {
+			justify-content: flex-start;
 		}
 	}
 	.logo {
@@ -118,8 +108,29 @@
 		&:hover {
 			filter: brightness(1.2);
 		}
-		&:global(.active) {
-			outline: 3px solid var(--color-white);
+		/* Draw the selected ring tight around the flag itself instead of
+		   around the larger 40px hit area, which left a visible gap. */
+		&:global(.active) img {
+			outline: 2px solid var(--color-white);
+			outline-offset: 2px;
+			border-radius: 50%;
+		}
+	}
+
+	/* Phones: place the CR flag to the left and the US flag to the right of
+	   the centred logo instead of stacking everything in a column. */
+	@media (max-width: 768px) {
+		.lang-buttons {
+			display: contents;
+		}
+		#es {
+			order: 1;
+		}
+		.logo {
+			order: 2;
+		}
+		#en {
+			order: 3;
 		}
 	}
 
